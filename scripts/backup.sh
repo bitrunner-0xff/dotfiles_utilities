@@ -1,24 +1,21 @@
 #!/usr/bin/env bash
 
 set -euo pipefail
-IFS=$'\n\t'
 
 SOURCE_FOLDER="$HOME/main"
-# DEST_DIR="/run/media/veracrypt1/backup"
-DEST_DIR="/mnt/veracrypt/backup"
-BACKUP_NAME="main_$(date +%Y-%m-%d).tar"
-
-# BACKUP_DIR="/run/media/veracrypt1/backup"
 BACKUP_DIR="/mnt/veracrypt/backup"
+
 RESTORE_DIR="$HOME"
 
 create() {
     echo "Backup process started..."
 
-    [[ ! -d "$DEST_DIR" ]] && {
+    [[ ! -d "$BACKUP_DIR" ]] && {
         echo "Backup destination not mounted"
         exit 1
     }
+
+    BACKUP_NAME="main_$(date +%Y-%m-%d).tar"
 
     [[ ! -e ~/main/secrets ]] && mkdir -p ~/main/secrets
 
@@ -26,10 +23,10 @@ create() {
 
     tar --create \
         --verbose \
-        --file="$DEST_DIR/$BACKUP_NAME" \
+        --file="$BACKUP_DIR/$BACKUP_NAME" \
         -C "$HOME" main
 
-    if ! tar -tf "$DEST_DIR/$BACKUP_NAME" >/dev/null; then
+    if ! tar -tf "$BACKUP_DIR/$BACKUP_NAME" >/dev/null; then
         echo "Your backup is busted."
         exit 1
     fi
@@ -42,13 +39,23 @@ create() {
     fi
 }
 
+get_last_file() {
+    LATEST=$(find "$BACKUP_DIR" -maxdepth 1 -type f -name "main_*.tar" 2>/dev/null |
+        sort -r |
+        head -n 1)
+
+    echo $LATEST
+}
+
 restore() {
     echo "Restore process started..."
+
+    FILE=$(get_last_file)
 
     tar --extract \
         --verbose \
         --directory="$RESTORE_DIR" \
-        --file="$1"
+        --file="$FILE"
 
     cp -a ~/main/secrets/. ~/ && rm -rf ~/main/secrets
 
@@ -62,7 +69,7 @@ restore() {
 
 case "$1" in
 -c) create ;;
--r) restore "$2" ;;
+-r) restore ;;
 *)
     echo "Usage: $0 -c | -r"
     exit 1
