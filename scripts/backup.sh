@@ -20,6 +20,7 @@ create() {
     [[ ! -e ~/main/secrets ]] && mkdir -p ~/main/secrets
 
     cp -av ~/.ssh ~/.password-store ~/.gnupg ~/main/secrets/
+    cp -av ~/.var/app/md.obsidian.Obsidian/config/obsidian/ ~/main/Obsidian/
 
     tar --create \
         --verbose \
@@ -58,6 +59,8 @@ restore() {
         --file="$FILE"
 
     cp -a ~/main/secrets/. ~/ && rm -rf ~/main/secrets
+    cp -av "~/.var/app/md.obsidian.Obsidian/config/obsidian/Custom Dictionary.txt" ~/main/Obsidian/
+    cp "~/main/Obsidian/Custom Dictionary.txt" ~/.var/app/md.obsidian.Obsidian/config/obsidian/
 
     if [ $? -eq 0 ]; then
         echo " ✓ Restore completed in: $RESTORE_DIR"
