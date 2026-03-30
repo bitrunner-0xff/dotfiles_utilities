@@ -1,0 +1,66 @@
+[env]
+TERM = "alacritty"
+
+[window]
+startup_mode = "Windowed"
+title = "Alacritty"
+dynamic_title = true
+decorations_theme_variant = "Dark"
+decorations = "Full"
+opacity = 1
+blur = false
+class = { instance = "Alacritty", general = "Alacritty" }
+level = "Normal"
+
+[scrolling]
+history = 50000
+multiplier = 3
+
+[font]
+normal = { family = "JetBrainsMonoNL Nerd Font Mono", style = "Regular" }
+builtin_box_drawing = true
+size = 14
+
+[cursor]
+style = { shape = "Beam", blinking = "On" }
+
+[terminal]
+shell = { program = "/bin/zsh" }
+
+[mouse]
+hide_when_typing = false
+
+[hints]
+enabled = [
+    { hyperlinks = true, post_processing = true, persist = true, action = "Copy" },
+]
+
+[keyboard]
+bindings = [{ key = "C", mods = "Control|Shift", action = "Copy" }]
+
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[colors.primary]
+background = "#1a1b26"
+foreground = "#a9b1d6"
+
+[colors.normal]
+black = "#32344a"
+blue = "#7aa2f7"
+cyan = "#7dcfff"
+green = "#73daca"
+magenta = "#ad8ee6"
+red = "#f7768e"
+white = "#787c99"
+yellow = "#e0af68"
+
+[colors.bright]
+black = "#444b6a"
+blue = "#7da6ff"
+cyan = "#0db9d7"
+green = "#b9f27c"
+magenta = "#bb9af7"
+red = "#ff7a93"
+white = "#acb0d0"
+yellow = "#ff9e64"
