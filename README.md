@@ -1,20 +1,15 @@
-# My Config Files
+# My config Files is used for utilities
 
-## Content
+## How to use
 
-- `Hypr` - Window manager
-- `Kitty` - Terminal
-- `Mako` - Notification daemon
-- `Nvim` - Terminal text editor
-- `Ranger` - Terminal file manager
-- `rose-pine` - Refind theme
-- `Satty`
-- `Waybar` - Top bar
-- `Wofi` - Program runner
-
-## How to install
+Copy the repo
 
 ```sh
-git clone https://github.com/bitrunner-0xff/dotfiles.git
+git clone https://github.com/bitrunner-0xff/dotfiles_utilities.git ~/.config/dotfiles_utilities
 ```
 
+And install the files
+
+```sh
+~/.config/dotfiles_hyprland/scripts/install.sh
+```
