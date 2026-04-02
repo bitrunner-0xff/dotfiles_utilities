@@ -3,7 +3,8 @@
 format = '''
 
 ┌─\($username@$hostname\) - \[$directory\] $git_branch$git_status $fill $cmd_duration
-└─$character'''
+└─$character
+'''
 
 add_newline = false
 

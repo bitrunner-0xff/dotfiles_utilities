@@ -21,3 +21,6 @@ ln -sfn ~/.config/dotfiles_utilities/.alacritty.toml ~/.alacritty.toml
 
 # Yazi
 ln -sfn ~/.config/dotfiles_utilities/yazi ~/.config/yazi
+
+# Starship
+ln -sfn ~/.config/dotfiles_utilities/starship.toml ~/.config/starship.toml
