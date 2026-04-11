@@ -11,5 +11,5 @@ git clone https://github.com/bitrunner-0xff/dotfiles_utilities.git ~/.config/dot
 And install the files
 
 ```sh
-~/.config/dotfiles_hyprland/scripts/install.sh
+. ~/.config/dotfiles_hyprland/install.sh
 ```

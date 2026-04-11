@@ -3,7 +3,9 @@
 FLAGS="--no-flat-playlist \
 	--no-windows-filenames \
 	--no-overwrites \
-	--sleep-interval 5 \
+    --sleep-requests 5 \
+	--sleep-interval 15 \
+    --max-sleep-interval 30 \
 	--continue \
 	--part \
 	--no-write-info-json \
@@ -27,8 +29,8 @@ MODE=""
 
 for arg in "$@"; do
     case $arg in
-    -help)
-        echo -e "Format: audio_video_downloader.sh [Option] URL\nOptions: \n\t-a - Download audio\n\t-v - Download video\n\t-l - List available places to download files\n\t-c - Use your cookies from firefox"
+    -h)
+        echo -e "Format: audio_video_downloader.sh [Option] URL\nOptions: \n\t-a - Download audio\n\t-v - Download video\n\t-l - List available places to download files\n\t-c - Use your cookies from firefox\n\t-p - Download playlist"
         exit 0
         ;;
     -l)
@@ -37,6 +39,9 @@ for arg in "$@"; do
         ;;
     -c)
         FLAGS="${FLAGS} ${COOKIES}"
+        ;;
+    -p)
+        FLAG="${FLAGS} --yes-playlist"
         ;;
     -v)
         MODE="video"

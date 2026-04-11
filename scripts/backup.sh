@@ -5,6 +5,9 @@ set -euo pipefail
 SOURCE_FOLDER="$HOME/main"
 BACKUP_DIR="/mnt/veracrypt/backup"
 
+OBSIDIAN_DICTIONARY_DIR="~/.var/app/md.obsidian.Obsidian/config/obsidian"
+OBSIDIAN_DICTIONARY="Custom\ Dictionary.txt"
+
 RESTORE_DIR="$HOME"
 
 create() {
@@ -19,25 +22,33 @@ create() {
 
     [[ ! -e ~/main/secrets ]] && mkdir -p ~/main/secrets
 
-    cp -av ~/.ssh ~/.password-store ~/.gnupg ~/main/secrets/
-    cp -av ~/.var/app/md.obsidian.Obsidian/config/obsidian/ ~/main/Obsidian/
+    cp -av \
+        ~/.ssh \
+        ~/.password-store \
+        ~/.gnupg tor.txt \
+        ~/mom_parols.txt \
+        ~/.Ack.kdbx \
+        ~/main/secrets
+
+    cp "$OBSIDIAN_DICTIONARY_DIR/$OBSIDIAN_DICTIONARY" ~/main/Obsidian/
 
     tar --create \
         --verbose \
         --file="$BACKUP_DIR/$BACKUP_NAME" \
-        -C "$HOME" main
+        -C "$HOME" \
+        main
 
-    if ! tar -tf "$BACKUP_DIR/$BACKUP_NAME" >/dev/null; then
-        echo "Your backup is busted."
+    if tar -tf "$BACKUP_DIR/$BACKUP_NAME" >/dev/null 2>&1; then
+        echo " ✓ Backup verified: $BACKUP_NAME ($(du -h "$BACKUP_DIR/$BACKUP_NAME" | cut -f1))"
         exit 1
     fi
 
-    if [ $? -eq 0 ]; then
-        echo " ✓ Backup created: $BACKUP_NAME"
-    else
+    if [ $? -ne 0 ]; then
         echo " ✗ Backup failed"
         exit 1
     fi
+
+    echo " ✓ Backup created: $BACKUP_NAME"
 }
 
 get_last_file() {
@@ -58,16 +69,15 @@ restore() {
         --directory="$RESTORE_DIR" \
         --file="$FILE"
 
-    cp -a ~/main/secrets/. ~/ && rm -rf ~/main/secrets
-    cp -av "~/.var/app/md.obsidian.Obsidian/config/obsidian/Custom Dictionary.txt" ~/main/Obsidian/
-    cp "~/main/Obsidian/Custom Dictionary.txt" ~/.var/app/md.obsidian.Obsidian/config/obsidian/
+    cp -a ~/main/secrets/. ~/
+    cp ~/main/Obsidian/$OBSIDIAN_DICTIONARY $OBSIDIAN_DICTIONARY_DIR
 
-    if [ $? -eq 0 ]; then
-        echo " ✓ Restore completed in: $RESTORE_DIR"
-    else
+    if [ $? -ne 0 ]; then
         echo " ✗ Restoration failed"
         exit 1
     fi
+
+    echo " ✓ Restore completed in: $RESTORE_DIR"
 }
 
 case "$1" in
