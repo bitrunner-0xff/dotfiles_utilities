@@ -5,8 +5,8 @@ set -euo pipefail
 SOURCE_FOLDER="$HOME/main"
 BACKUP_DIR="/mnt/veracrypt/backup"
 
-OBSIDIAN_DICTIONARY_DIR="~/.var/app/md.obsidian.Obsidian/config/obsidian"
-OBSIDIAN_DICTIONARY="Custom\ Dictionary.txt"
+OBSIDIAN_DICTIONARY_DIR="$HOME/.var/app/md.obsidian.Obsidian/config/obsidian"
+OBSIDIAN_DICTIONARY="Custom Dictionary.txt"
 
 RESTORE_DIR="$HOME"
 
