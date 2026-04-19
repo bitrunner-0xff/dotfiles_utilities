@@ -1,12 +1,18 @@
 return {
   {
+    "mason-org/mason.nvim",
+    opts = {
+      ensure_installed = {
+        "stylua", -- Lua
+      },
+    },
+  },
+  {
     "mason-org/mason-lspconfig.nvim",
     config = function()
       require("mason-lspconfig").setup({
         ensure_installed = {
-          "jsonls", -- Json
-          "yamlls", -- Yaml
-          "marksman", -- Something about Vim marks
+          "lua_ls", -- Lua
         },
         automatic_installation = true,
       })
