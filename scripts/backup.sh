@@ -25,10 +25,14 @@ create() {
     cp -av \
         ~/.ssh \
         ~/.password-store \
-        ~/.gnupg tor.txt \
+        ~/tor.txt \
         ~/mom_parols.txt \
         ~/.Ack.kdbx \
         ~/main/secrets
+
+    gpg --export --armor >~/main/secrets/gpg-public-keys.asc
+    gpg --export-secret-keys --armor >~/main/secrets/gpg-private-keys.asc
+    gpg --export-ownertrust >~/main/secrets/gpg-ownertrust.txt
 
     cp "$OBSIDIAN_DICTIONARY_DIR/$OBSIDIAN_DICTIONARY" ~/main/Obsidian/
 
@@ -70,6 +74,13 @@ restore() {
         --file="$FILE"
 
     cp -a ~/main/secrets/. ~/
+
+    gpg --import ~/main/secrets/gpg-public-keys.asc
+    gpg --import ~/main/secrets/gpg-private-keys.asc
+    gpg --import-ownertrust ~/main/secrets/gpg-ownertrust.txt
+
+    rm -rf ~/main/secrets
+
     cp ~/main/Obsidian/$OBSIDIAN_DICTIONARY $OBSIDIAN_DICTIONARY_DIR
 
     if [ $? -ne 0 ]; then
